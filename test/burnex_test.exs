@@ -27,6 +27,10 @@ defmodule BurnexTest do
     refute Enum.any?(Burnex.providers, &(String.length(&1) == 0))
   end
 
+  test "providers should always be lowercase" do
+    refute Enum.any?(Burnex.providers, &(String.downcase(&1) != &1))
+  end
+
   property "doesn't explode if email has bad format" do
     check all email <- StreamData.string(:alphanumeric) do
       refute Burnex.is_burner? email
@@ -36,6 +40,12 @@ defmodule BurnexTest do
   property "should always detect emails with blacklisted providers" do
     check all email <- email_generator(Burnex.providers) do
       assert Burnex.is_burner? email
+    end
+  end
+
+  property "is not fooled by uppercase domains" do
+    check all email <- email_generator(Burnex.providers) do
+      assert Burnex.is_burner? String.upcase(email)
     end
   end
 

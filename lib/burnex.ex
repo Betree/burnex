@@ -22,7 +22,7 @@ defmodule Burnex do
   """
   @spec is_burner?(String.t) :: boolean()
   def is_burner?(email) do
-    case Regex.run(~r/@([^@]+)$/, email) do
+    case Regex.run(~r/@([^@]+)$/, String.downcase(email)) do
       [_ | [provider]] ->
         Enum.any?(@providers, &Kernel.==(provider, &1))
       _ ->
