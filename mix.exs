@@ -37,7 +37,7 @@ defmodule Burnex.Mixfile do
      licenses: ["MIT"],
      links: %{
        "GitHub" => "https://github.com/Betree/burnex",
-      # TODO  "Docs" => ""
+       "Docs" => "https://hexdocs.pm/burnex"
      }
    ]
   end
