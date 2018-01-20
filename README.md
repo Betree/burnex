@@ -3,16 +3,17 @@
 [![Build Status](https://travis-ci.org/Betree/burnex.svg?branch=master)](https://travis-ci.org/Betree/burnex)
 [![Coverage Status](https://coveralls.io/repos/github/Betree/burnex/badge.svg?branch=master)](https://coveralls.io/github/Betree/burnex?branch=master)
 
-Compare an email address against 3700+ burner email domains (temporary email providers).
+Compare an email address against 3700+ burner email domains (temporary email providers) based on
+[this list](https://github.com/wesbos/burner-email-providers).
 
-Based on [this list](https://github.com/wesbos/burner-email-providers)
+See [documentation](https://hexdocs.pm/burnex/Burnex.html).
 
 ## Installation
 
 ```elixir
 def deps do
   [
-    {:burnex, github: "betree/burnex"}
+    {:burnex, "~> 1.0"}
   ]
 end
 ```
