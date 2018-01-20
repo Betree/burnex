@@ -4,7 +4,7 @@ defmodule Burnex.Mixfile do
   def project do
     [
       app: :burnex,
-      version: "0.1.0",
+      version: "0.1.1",
       elixir: "~> 1.5",
       description: "Elixir burner email (temporary address) detector",
       start_permanent: Mix.env == :prod,

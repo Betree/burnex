@@ -13,12 +13,12 @@ defmodule Burnex do
 
   ## Examples
 
-    iex> Burnex.is_burner?("my-email@gmail.com")
-    false
-    iex> Burnex.is_burner?("my-email@yopmail.fr")
-    true
-    iex> Burnex.is_burner? "invalid.format.yopmail.fr"
-    false
+      iex> Burnex.is_burner?("my-email@gmail.com")
+      false
+      iex> Burnex.is_burner?("my-email@yopmail.fr")
+      true
+      iex> Burnex.is_burner? "invalid.format.yopmail.fr"
+      false
   """
   @spec is_burner?(String.t) :: boolean()
   def is_burner?(email) do
