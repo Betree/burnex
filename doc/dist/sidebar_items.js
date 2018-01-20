@@ -1,0 +1,1 @@
+sidebarNodes={"exceptions":[],"extras":[{"id":"api-reference","title":"API Reference","headers":[]}],"modules":[{"id":"Burnex","title":"Burnex","functions":[{"id":"is_burner?/1","anchor":"is_burner?/1"},{"id":"providers/0","anchor":"providers/0"}]}],"protocols":[]}
