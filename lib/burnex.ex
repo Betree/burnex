@@ -4,17 +4,36 @@ defmodule Burnex do
   List from https://github.com/wesbos/burner-email-providers/blob/master/emails.txt
   """
 
-  @providers String.split(File.read!("priv/burner-email-providers/emails.txt"), "\n")
+  @providers File.read!("priv/burner-email-providers/emails.txt")
+    |> String.split("\n")
+    |> Enum.filter(fn str -> str != "" end)
 
+  @doc"""
+  Check if email is a temporary / burner address.
+
+  ## Examples
+
+    iex> Burnex.is_burner?("my-email@gmail.com")
+    false
+    iex> Burnex.is_burner?("my-email@yopmail.fr")
+    true
+    iex> Burnex.is_burner? "invalid.format.yopmail.fr"
+    false
+  """
+  @spec is_burner?(String.t) :: boolean()
   def is_burner?(email) do
-    case String.split(email, "@") do
+    case Regex.run(~r/@([^@]+)$/, email) do
       [_ | [provider]] ->
         Enum.any?(@providers, &Kernel.==(provider, &1))
       _ ->
-        true # Bad email format
+        false # Bad email format
     end
   end
 
+  @doc"""
+  Returns the list of all blacklisted domains providers
+  """
+  @spec providers() :: nonempty_list(String.t)
   def providers() do
     @providers
   end

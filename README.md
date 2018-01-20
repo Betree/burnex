@@ -16,10 +16,18 @@ end
 
 ## Usage
 
+Be aware that Burnex will not check if the email is RFC compliant, it will only
+check the domain (everything that comes after `@`).
+
+
 ```elixir
 iex> Burnex.is_burner?("my-email@gmail.com")
 false
 iex> Burnex.is_burner?("my-email@yopmail.fr")
+true
+iex> Burnex.is_burner? "invalid.format.yopmail.fr"
+false
+iex> Burnex.is_burner? "\"this is a valid address! crazy right ?\"@yopmail.fr"
 true
 iex> Burnex.providers
 ["001.igg.biz", "027168.com", "0815.ru", "0815.ry", "0815.su", "0845.ru",
