@@ -4,7 +4,9 @@ defmodule Burnex do
   List from https://github.com/wesbos/burner-email-providers/blob/master/emails.txt
   """
 
-  @providers File.read!("priv/burner-email-providers/emails.txt")
+  @external_resource "priv/burner-email-providers/emails.txt"
+
+  @providers File.read!(@external_resource)
     |> String.split("\n")
     |> Enum.filter(fn str -> str != "" end)
 
