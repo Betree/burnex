@@ -32,7 +32,7 @@ defmodule Burnex.Mixfile do
 
   defp package do
     [
-     files: ["lib", "priv", "mix.exs", "README.md"],
+     files: ["lib", "priv", "mix.exs", "README.md", "LICENSE"],
      maintainers: ["Benjamin Piouffle"],
      licenses: ["MIT"],
      links: %{
