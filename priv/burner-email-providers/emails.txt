@@ -1290,7 +1290,6 @@ free-email.ga
 freefattymovies.com
 freelance-france.eu
 freeletter.me
-freemail.hu
 freemail.ms
 freemails.cf
 freemails.ga
@@ -1986,6 +1985,8 @@ maggotymeat.ga
 magicbox.ro
 maidlow.info
 mail.aws910.com
+mail.bccto.com
+mail.bccto.me
 mail.by
 mail.illistnoise.com
 mail.mailinator.com
@@ -2436,6 +2437,7 @@ no-spammers.com
 nospamthanks.info
 nostrajewellery.xyz
 nothingtoseehere.ca
+nbox.notif.me
 notif.me
 notmailinator.com
 notrnailinator.com
@@ -3630,6 +3632,8 @@ wudet.men
 wupics.com
 wuzup.net
 wuzupmail.net
+www.bccto.com
+www.bccto.me
 www.e4ward.com
 www.gishpuppy.com
 www.mailinator.com
