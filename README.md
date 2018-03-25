@@ -47,3 +47,28 @@ iex> Burnex.providers
  "10minutesmail.net", "10minutesmail.ru", "10vpn.info", "10x.es", "10x9.com",
  "11top.xyz", "123-m.com", "126.com", ...]
 ```
+
+## Phoenix Changeset
+
+```elixir
+def changeset(model, params) do
+  model
+  |> cast(params, @required_fields ++ @optional_fields)
+  |> validate_required([:email])
+  |> validate_email()
+end
+
+@email_regex ~r/\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
+
+defp validate_email(%{changes: %{email: email}} = changeset) do
+  case Regex.match?(@email_regex, email) do
+    true ->
+      case Burnex.is_burner?(email) do
+        true -> add_error(changeset, :email, "forbidden_provider")
+        false -> changeset
+      end
+    false -> add_error(changeset, :email, "invalid_format")
+  end
+end
+def validate_email(changeset), do: changeset
+```
