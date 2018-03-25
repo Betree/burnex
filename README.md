@@ -48,7 +48,9 @@ iex> Burnex.providers
  "11top.xyz", "123-m.com", "126.com", ...]
 ```
 
-## Phoenix Changeset
+### With a Phoenix changeset
+
+Following code ensures email has a valid format then check if it belongs to a burner provider:
 
 ```elixir
 def changeset(model, params) do
