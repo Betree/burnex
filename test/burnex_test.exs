@@ -20,7 +20,7 @@ defmodule BurnexTest do
   end
 
   test "providers list should never be empty" do
-    refute Enum.count(Burnex.providers) == 0
+    refute Enum.empty?(Burnex.providers)
   end
 
   test "providers list should not contains empty values" do

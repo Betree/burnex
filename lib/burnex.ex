@@ -6,11 +6,12 @@ defmodule Burnex do
 
   @external_resource "priv/burner-email-providers/emails.txt"
 
-  @providers File.read!(@external_resource)
-    |> String.split("\n")
-    |> Enum.filter(fn str -> str != "" end)
+  @providers @external_resource
+             |> File.read!()
+             |> String.split("\n")
+             |> Enum.filter(fn str -> str != "" end)
 
-  @doc"""
+  @doc """
   Check if email is a temporary / burner address.
 
   ## Examples
@@ -22,20 +23,22 @@ defmodule Burnex do
       iex> Burnex.is_burner? "invalid.format.yopmail.fr"
       false
   """
-  @spec is_burner?(String.t) :: boolean()
+  @spec is_burner?(binary()) :: boolean()
   def is_burner?(email) do
     case Regex.run(~r/@([^@]+)$/, String.downcase(email)) do
       [_ | [provider]] ->
         Enum.any?(@providers, &Kernel.==(provider, &1))
+
       _ ->
-        false # Bad email format
+        # Bad email format
+        false
     end
   end
 
-  @doc"""
+  @doc """
   Returns the list of all blacklisted domains providers
   """
-  @spec providers() :: nonempty_list(String.t)
+  @spec providers() :: nonempty_list(binary())
   def providers() do
     @providers
   end
