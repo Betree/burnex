@@ -1,8 +1,11 @@
 defmodule BurnexTest do
+  @moduledoc """
+  Tests for `Burnex` module.
+  """
+
   use ExUnit.Case, async: true
   use ExUnitProperties
   doctest Burnex
-
 
   test "example: filters jetable.org" do
     assert Burnex.is_burner? "test@jetable.org"
