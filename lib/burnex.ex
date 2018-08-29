@@ -27,7 +27,7 @@ defmodule Burnex do
   def is_burner?(email) do
     case Regex.run(~r/@([^@]+)$/, String.downcase(email)) do
       [_ | [domain]] ->
-        is_burner_domain(domain)
+        is_burner_domain?(domain)
 
       _ ->
         # Bad email format
@@ -40,15 +40,15 @@ defmodule Burnex do
 
   ## Examples
 
-      iex> Burnex.is_burner_domain("yopmail.fr")
+      iex> Burnex.is_burner_domain?("yopmail.fr")
       true
-      iex> Burnex.is_burner_domain("")
+      iex> Burnex.is_burner_domain?("")
       false
-      iex> Burnex.is_burner_domain("gmail.com")
+      iex> Burnex.is_burner_domain?("gmail.com")
       false
   """
-  @spec is_burner_domain(binary()) :: boolean()
-  def is_burner_domain(domain) do
+  @spec is_burner_domain?(binary()) :: boolean()
+  def is_burner_domain?(domain) do
     Enum.any?(@providers, &Kernel.==(domain, &1))
   end
 
