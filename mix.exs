@@ -5,7 +5,7 @@ defmodule Burnex.Mixfile do
     [
       app: :burnex,
       version: "1.1.1",
-      elixir: "~> 1.6",
+      elixir: "~> 1.7",
       description: "Elixir burner email (temporary address) detector",
       start_permanent: Mix.env == :prod,
       package: package(),
@@ -26,8 +26,7 @@ defmodule Burnex.Mixfile do
       # Dev
       {:credo, "~> 0.9.1", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.0.0-rc.3", only: :dev, runtime: false},
-      {:earmark, "~> 0.1", only: :dev, runtime: false},
-      {:ex_doc, "~> 0.11", only: :dev, runtime: false},
+      {:ex_doc, "~> 0.19", only: :dev, runtime: false},
 
       # Testing
       {:excoveralls, "~> 0.8", only: :test},
