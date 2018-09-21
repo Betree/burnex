@@ -1,5 +1,5 @@
 language: elixir
-elixir: '1.6'
+elixir: '1.7'
 otp_release: '21.0'
 cache:
   directories:
