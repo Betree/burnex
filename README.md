@@ -48,7 +48,7 @@ iex> Burnex.providers
  "11top.xyz", "123-m.com", "126.com", ...]
 ```
 
-### With a Phoenix changeset
+### With an Ecto changeset
 
 Following code ensures email has a valid format then check if it belongs to a burner provider:
 
