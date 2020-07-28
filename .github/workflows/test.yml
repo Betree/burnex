@@ -1,0 +1,61 @@
+name: Test
+on: push
+
+jobs:
+  unit-test:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      MIX_ENV: test
+    steps:
+      - uses: actions/checkout@v2
+      - name: Cache deps
+        id: cache-deps
+        uses: actions/cache@v2
+        with:
+          path: deps
+          key: ${{ runner.os }}-deps
+      - uses: actions/setup-elixir@v1
+        with:
+          otp-version: "22.2"
+          elixir-version: "1.9.4"
+      - run: mix deps.get
+      - run: mix coveralls.github
+  credo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Cache deps
+        id: cache-deps
+        uses: actions/cache@v2
+        with:
+          path: deps
+          key: ${{ runner.os }}-deps
+      - uses: actions/setup-elixir@v1
+        with:
+          otp-version: "22.2"
+          elixir-version: "1.9.4"
+      - run: mix deps.get
+      - run: mix credo
+  dialyzer:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Cache deps
+        id: cache-deps
+        uses: actions/cache@v2
+        with:
+          path: deps
+          key: ${{ runner.os }}-deps
+      - name: Cache PLT
+        id: cache-plt
+        uses: actions/cache@v2
+        with:
+          path: priv/plts
+          key: ${{ runner.os }}-plts
+      - uses: actions/setup-elixir@v1
+        with:
+          otp-version: "22.2"
+          elixir-version: "1.9.4"
+      - run: mix deps.get
+      - run: mix dialyzer
