@@ -1,6 +1,6 @@
 # Burnex
 
-[![Build Status](https://travis-ci.org/Betree/burnex.svg?branch=master)](https://travis-ci.org/Betree/burnex)
+[![Build Status](https://github.com/Betree/burnex/workflows/Test/badge.svg)](https://github.com/Betree/burnex/actions)
 [![Coverage Status](https://coveralls.io/repos/github/Betree/burnex/badge.svg?branch=master)](https://coveralls.io/github/Betree/burnex?branch=master)
 
 Compare an email address against 3900+ burner email domains (temporary email providers) based on
@@ -22,7 +22,6 @@ end
 
 Be aware that Burnex will not check if the email is RFC compliant, it will only
 check the domain (everything that comes after `@`).
-
 
 ```elixir
 iex> Burnex.is_burner?("my-email@gmail.com")

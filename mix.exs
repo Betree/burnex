@@ -7,13 +7,16 @@ defmodule Burnex.Mixfile do
       version: "1.1.1",
       elixir: "~> 1.7",
       description: "Elixir burner email (temporary address) detector",
-      start_permanent: Mix.env == :prod,
+      start_permanent: Mix.env() == :prod,
       package: package(),
       deps: deps(),
       docs: [main: "Burnex"],
       test_coverage: [tool: ExCoveralls],
       preferred_cli_env: [coveralls: :test],
-      dialyzer: [remove_defaults: [:unknown]]
+      dialyzer: [
+        remove_defaults: [:unknown],
+        plt_file: {:no_warn, "priv/plts/dialyzer.plt"}
+      ]
     ]
   end
 
@@ -29,20 +32,20 @@ defmodule Burnex.Mixfile do
       {:ex_doc, "~> 0.19", only: :dev, runtime: false},
 
       # Testing
-      {:excoveralls, "~> 0.8", only: :test},
+      {:excoveralls, "~> 0.10", only: :test},
       {:stream_data, "~> 0.1", only: :test}
     ]
   end
 
   defp package do
     [
-     files: ["lib", "priv", "mix.exs", "README.md", "LICENSE"],
-     maintainers: ["Benjamin Piouffle"],
-     licenses: ["MIT"],
-     links: %{
-       "GitHub" => "https://github.com/Betree/burnex",
-       "Docs" => "https://hexdocs.pm/burnex"
-     }
-   ]
+      files: ["lib", "priv", "mix.exs", "README.md", "LICENSE"],
+      maintainers: ["Benjamin Piouffle"],
+      licenses: ["MIT"],
+      links: %{
+        "GitHub" => "https://github.com/Betree/burnex",
+        "Docs" => "https://hexdocs.pm/burnex"
+      }
+    ]
   end
 end
