@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.0
+* Update dependencies
+* Update providers list
+* Update docs
+
 ## 1.1.0 (2018-08-29)
 
 * Breaking changes
