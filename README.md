@@ -71,5 +71,5 @@ defp validate_email(%{changes: %{email: email}} = changeset) do
     false -> add_error(changeset, :email, "invalid_format")
   end
 end
-def validate_email(changeset), do: changeset
+defp validate_email(changeset), do: changeset
 ```
