@@ -40,7 +40,7 @@ defmodule Burnex.Mixfile do
 
   defp package do
     [
-      files: ["lib", "priv", "mix.exs", "README.md", "LICENSE"],
+      files: ["lib", "priv/burner-email-providers", "mix.exs", "README.md", "LICENSE"],
       maintainers: ["Benjamin Piouffle"],
       licenses: ["MIT"],
       links: %{
