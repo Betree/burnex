@@ -27,7 +27,7 @@ defmodule Burnex.Mixfile do
   defp deps do
     [
       # Dev
-      {:credo, "~> 1.1.5", only: [:dev, :test], runtime: false},
+      {:credo, "~> 1.4.0", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.0.0-rc.3", only: :dev, runtime: false},
       {:ex_doc, "~> 0.19", only: :dev, runtime: false},
 
