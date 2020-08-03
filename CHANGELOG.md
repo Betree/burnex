@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.1
+* Fix build issue (missing VERSION in release) - https://github.com/Betree/burnex/issues/33
+
 ## 1.2.0
 * Update dependencies
 * Update providers list
