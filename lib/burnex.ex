@@ -10,6 +10,7 @@ defmodule Burnex do
              |> File.read!()
              |> String.split("\n")
              |> Enum.filter(fn str -> str != "" end)
+             |> MapSet.new()
 
   @doc """
   Check if email is a temporary / burner address.
@@ -49,7 +50,7 @@ defmodule Burnex do
   """
   @spec is_burner_domain?(binary()) :: boolean()
   def is_burner_domain?(domain) do
-    Enum.any?(@providers, &Kernel.==(domain, &1))
+    MapSet.member?(@providers, domain)
   end
 
   @doc """
