@@ -56,7 +56,7 @@ defmodule Burnex do
   @doc """
   Returns the list of all blacklisted domains providers
   """
-  @spec providers() :: nonempty_list(binary())
+  @spec providers() :: MapSet.t(binary())
   def providers do
     @providers
   end
