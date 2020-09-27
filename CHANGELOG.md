@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.0.0
+* Improve performances by using a MapSet (#37) - thanks @tomciopp! This is a breaking change if you rely on Burnex.providers as it now returns a MapSet insteady of a list.
+
 ## 1.2.1
 * Fix build issue (missing VERSION in release) - https://github.com/Betree/burnex/issues/33
 
