@@ -4,6 +4,8 @@ defmodule Burnex do
   List from https://github.com/wesbos/burner-email-providers/blob/master/emails.txt
   """
 
+  @dialyzer {:nowarn_function, is_burner_domain?: 1}
+
   @external_resource "priv/burner-email-providers/emails.txt"
 
   @providers @external_resource
@@ -56,7 +58,6 @@ defmodule Burnex do
   @doc """
   Returns the list of all blacklisted domains providers
   """
-  @spec providers() :: MapSet.t(binary())
   def providers do
     @providers
   end
