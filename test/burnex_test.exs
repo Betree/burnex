@@ -23,9 +23,8 @@ defmodule BurnexTest do
   end
 
   test "with subdomains" do
-    # As ugly as it is, these are valid email formats
     assert Burnex.is_burner? "hello@mail2.mailinator.com"
-    assert Burnex.is_burner? "hello@reject2.heluna.com"
+    assert Burnex.is_burner? "hello@reject2.maildrop.cc"
   end
 
   test "providers list should never be empty" do
