@@ -22,6 +22,12 @@ defmodule BurnexTest do
     assert Burnex.is_burner? "\"this is valid! crazy right ?\"@yopmail.fr"
   end
 
+  test "with subdomains" do
+    # As ugly as it is, these are valid email formats
+    assert Burnex.is_burner? "hello@mail2.mailinator.com"
+    assert Burnex.is_burner? "hello@reject2.heluna.com"
+  end
+
   test "providers list should never be empty" do
     refute Enum.empty?(Burnex.providers)
   end
