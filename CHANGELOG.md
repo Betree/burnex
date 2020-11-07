@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.1.0
+* Validate subdomains (#46) - thanks @peaceful-james
+* Update dependencies
+* Updadte domains
+
 ## 2.0.0
 * Improve performances by using a MapSet (#37) - thanks @tomciopp! This is a breaking change if you rely on Burnex.providers as it now returns a MapSet insteady of a list.
 
