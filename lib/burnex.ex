@@ -52,7 +52,19 @@ defmodule Burnex do
   """
   @spec is_burner_domain?(binary()) :: boolean()
   def is_burner_domain?(domain) do
-    MapSet.member?(@providers, domain)
+    case MapSet.member?(@providers, domain) do
+      false ->
+        case Regex.run(~r/^[^.]+[.](.*)$/, domain) do
+          [_ | [higher_domain]] ->
+            is_burner_domain?(higher_domain)
+
+          nil ->
+            false
+        end
+
+      true ->
+        true
+    end
   end
 
   @doc """
