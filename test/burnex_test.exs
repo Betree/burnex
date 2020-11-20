@@ -72,6 +72,16 @@ defmodule BurnexTest do
     test "correctly resolves domains missing MX records" do
       assert Burnex.is_burner_mx_record?("somenonesensedomain.blahblahblah") == {true, "Cannot find MX record"}
     end
+
+    test "correctly resolves domains with 'good' MX records" do
+      [
+        "gmail.com",
+        "hotmail.com"
+      ]
+      |> Enum.each(fn good_domain ->
+        refute Burnex.is_burner_mx_record?(good_domain), "#{good_domain} should have a good mailserver with valid MX record"
+      end)
+    end
   end
 
   # ---- Helpers ----
