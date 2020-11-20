@@ -73,3 +73,14 @@ defp validate_email(%{changes: %{email: email}} = changeset) do
 end
 defp validate_email(changeset), do: changeset
 ```
+
+### MX record DNS resolution
+
+As an extra precaution against newly-created burner domains,
+you can specify Burnex to do MX record DNS resolution.
+This is done by passing optional boolean argument `resolve_mx_record` as `true`:
+
+```
+iex> Burnex.is_burner?("my-email@gmail.fr", true)
+{true, "Cannot find MX record"}
+```
