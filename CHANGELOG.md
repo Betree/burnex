@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.2.0
+* Add option to resolve MX records (#50) - thanks @peaceful-james
+
 ## 2.1.0
 * Validate subdomains (#46) - thanks @peaceful-james
 * Update dependencies
