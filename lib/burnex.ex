@@ -17,6 +17,8 @@ defmodule Burnex do
   @doc """
   Check if email is a temporary / burner address.
 
+  Optionally resolve the MX record
+
   ## Examples
 
       iex> Burnex.is_burner?("my-email@gmail.com")
@@ -25,6 +27,8 @@ defmodule Burnex do
       true
       iex> Burnex.is_burner? "invalid.format.yopmail.fr"
       false
+      iex> Burnex.is_burner?("my-email@gmail.fr", true)
+      true
   """
   @spec is_burner?(binary(), boolean()) :: boolean()
   def is_burner?(email, resolve_mx_record \\ false) do
