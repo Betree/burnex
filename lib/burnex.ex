@@ -28,7 +28,7 @@ defmodule Burnex do
       iex> Burnex.is_burner? "invalid.format.yopmail.fr"
       false
       iex> Burnex.is_burner?("my-email@gmail.fr", true)
-      true
+      {true, "Cannot find MX record"}
   """
   @spec is_burner?(binary(), boolean()) :: boolean()
   def is_burner?(email, resolve_mx_record \\ false) do
