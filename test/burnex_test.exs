@@ -64,6 +64,16 @@ defmodule BurnexTest do
     end
   end
 
+  describe "mx record validation" do
+    test "correctly resolves domains with bad MX records" do
+      assert Burnex.is_burner_mx_record?("jetable.org") == {true, "Forbidden MX server(s): mx.jetable.org"}
+    end
+
+    test "correctly resolves domains missing MX records" do
+      assert Burnex.is_burner_mx_record?("somenonesensedomain.blahblahblah") == {true, "Cannot find MX record"}
+    end
+  end
+
   # ---- Helpers ----
 
   defp email_generator(providers) do
