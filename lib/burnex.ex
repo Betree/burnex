@@ -30,7 +30,7 @@ defmodule Burnex do
       iex> Burnex.is_burner?("my-email@gmail.fr", true)
       {true, "Cannot find MX record"}
   """
-  @spec is_burner?(binary(), boolean()) :: boolean()
+  @spec is_burner?(binary(), boolean()) :: boolean() | {true, binary()}
   def is_burner?(email, resolve_mx_record \\ false) do
     case Regex.run(~r/@([^@]+)$/, String.downcase(email)) do
       [_ | [domain]] ->
@@ -86,7 +86,7 @@ defmodule Burnex do
     end)
   end
 
-  @spec is_burner_mx_record?(binary()) :: boolean() | {boolean(), binary()}
+  @spec is_burner_mx_record?(binary()) :: boolean() | {true, binary()}
   def is_burner_mx_record?(domain) do
     with {:dns_resolve, {:ok, mx_resolution}} <- {:dns_resolve, DNS.resolve(domain, :mx)},
          {:bad_server_domains, []} <- {:bad_server_domains, bad_mx_server_domains(mx_resolution)} do
