@@ -1,14 +1,22 @@
 # Burnex
 
+<!--MDOC !-->
+
 [![Build Status](https://github.com/Betree/burnex/workflows/Test/badge.svg)](https://github.com/Betree/burnex/actions)
 [![Coverage Status](https://coveralls.io/repos/github/Betree/burnex/badge.svg?branch=master)](https://coveralls.io/github/Betree/burnex?branch=master)
+[![Module Version](https://img.shields.io/hexpm/v/burnex.svg)](https://hex.pm/packages/burnex)
+[![Hex Docs](https://img.shields.io/badge/hex-docs-lightgreen.svg)](https://hexdocs.pm/burnex/)
+[![Total Download](https://img.shields.io/hexpm/dt/burnex.svg)](https://hex.pm/packages/burnex)
+[![License](https://img.shields.io/hexpm/l/burnex.svg)](https://hex.pm/packages/burnex)
+[![Last Updated](https://img.shields.io/github/last-commit/Betree/burnex.svg)](https://github.com/Betree/burnex/commits/master)
 
-Compare an email address against 3900+ burner email domains (temporary email providers) based on
-[this list](https://github.com/wesbos/burner-email-providers).
-
-See [documentation](https://hexdocs.pm/burnex/Burnex.html).
+Compare an email address against 3900+ burner email domains (temporary email
+providers) based on this list from
+[https://github.com/wesbos/burner-email-providers](https://github.com/wesbos/burner-email-providers).
 
 ## Installation
+
+Add `:burnex` to your list of dependencies in `mix.exs`.
 
 ```elixir
 def deps do
@@ -32,19 +40,12 @@ iex> Burnex.is_burner? "invalid.format.yopmail.fr"
 false
 iex> Burnex.is_burner? "\"this is a valid address! crazy right ?\"@yopmail.fr"
 true
+
 iex> Burnex.providers
-["001.igg.biz", "027168.com", "0815.ru", "0815.ry", "0815.su", "0845.ru",
- "0box.eu", "0clickemail.com", "0-mail.com", "0mixmail.info", "0u.ro", "0v.ro",
- "0w.ro", "0wnd.net", "0wnd.org", "0x00.name", "0x207.info",
- "1000rebates.stream", "100likers.com", "10host.top", "10mail.com",
- "10mail.org", "10minut.com.pl", "10minutemail.be", "10minutemail.cf",
- "10minutemail.co.uk", "10minutemail.co.za", "10minutemail.com",
- "10minutemail.de", "10minutemail.ga", "10minutemail.gq", "10minutemail.info",
- "10minutemail.ml", "10minutemail.net", "10minutemail.nl", "10minutemail.org",
- "10minutemail.ru", "10minutemail.us", "10minutemailbox.com",
- "10minutenemail.de", "10minutesmail.com", "10minutesmail.fr",
- "10minutesmail.net", "10minutesmail.ru", "10vpn.info", "10x.es", "10x9.com",
- "11top.xyz", "123-m.com", "126.com", ...]
+#MapSet<["mysunrise.tech", "gmailom.co", "renwoying.org",
+"xn--c3cralk2a3ak7a5gghbv.com", "ghork.live", "wellnessmarketing.solutions",
+"zerograv.top", "votenoonnov6.com", "b45win.org", "muslimahcollection.online",
+...]>
 ```
 
 ### With an Ecto changeset
@@ -84,3 +85,7 @@ This is done by passing optional boolean argument `resolve_mx_record` as `true`:
 iex> Burnex.is_burner?("my-email@gmail.fr", true)
 {true, "Cannot find MX record"}
 ```
+
+## License
+
+This software is licensed under MIT license. Copyright (c) 2018- Benjamin Piouffle.

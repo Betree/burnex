@@ -1,18 +1,18 @@
 defmodule Burnex do
-  @moduledoc """
-  Elixir burner email (temporary address) detector.
-  List from https://github.com/wesbos/burner-email-providers/blob/master/emails.txt
-  """
+  @external_resource readme = "README.md"
+  @moduledoc readme
+             |> File.read!()
+             |> String.split("<!--MDOC !-->")
+             |> Enum.fetch!(1)
 
-  @dialyzer {:nowarn_function, is_burner_domain?: 1}
-
-  @external_resource "priv/burner-email-providers/emails.txt"
-
-  @providers @external_resource
+  @external_resource emails = "priv/burner-email-providers/emails.txt"
+  @providers emails
              |> File.read!()
              |> String.split("\n")
              |> Enum.filter(fn str -> str != "" end)
              |> MapSet.new()
+
+  @dialyzer {:nowarn_function, is_burner_domain?: 1}
 
   @doc """
   Check if email is a temporary / burner address.
@@ -29,6 +29,7 @@ defmodule Burnex do
       false
       iex> Burnex.is_burner?("my-email@gmail.fr", true)
       {true, "Cannot find MX record"}
+
   """
   @spec is_burner?(binary(), boolean()) :: boolean()
   def is_burner?(email, resolve_mx_record \\ false) do
@@ -43,7 +44,7 @@ defmodule Burnex do
   end
 
   @doc """
-  Check a domain
+  Check a domain is a burner domain.
 
   ## Examples
 
@@ -53,6 +54,7 @@ defmodule Burnex do
       false
       iex> Burnex.is_burner_domain?("gmail.com")
       false
+
   """
   @spec is_burner_domain?(binary()) :: boolean()
   def is_burner_domain?(domain) do
@@ -72,7 +74,16 @@ defmodule Burnex do
   end
 
   @doc """
-  Returns the list of all blacklisted domains providers
+  Returns the list of all blacklisted domains providers.
+
+  ## Examples
+
+      iex> Burnex.providers()
+      #MapSet<["mysunrise.tech", "gmailom.co", "renwoying.org",
+      "xn--c3cralk2a3ak7a5gghbv.com", "ghork.live", "wellnessmarketing.solutions",
+      "zerograv.top", "votenoonnov6.com", "b45win.org", "muslimahcollection.online",
+      ...]>
+
   """
   def providers do
     @providers

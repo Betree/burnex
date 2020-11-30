@@ -1,20 +1,27 @@
 # Changelog
 
 ## 2.2.0
+
 * Add option to resolve MX records (#50) - thanks @peaceful-james
 
-## 2.1.0
+## 2.1.0 (2020-11-08)
+
 * Validate subdomains (#46) - thanks @peaceful-james
 * Update dependencies
-* Updadte domains
+* Update domains
 
-## 2.0.0
-* Improve performances by using a MapSet (#37) - thanks @tomciopp! This is a breaking change if you rely on Burnex.providers as it now returns a MapSet insteady of a list.
+## 2.0.0 (2020-09-28)
 
-## 1.2.1
-* Fix build issue (missing VERSION in release) - https://github.com/Betree/burnex/issues/33
+* Breaking changes
+  - Improve performances by using a MapSet (#37) - thanks @tomciopp!
+  - `Burnex.provider/0` returns a MapSet instead of a list.
 
-## 1.2.0
+## 1.2.1 (2020-08-03)
+
+* Fix build issue, missing VERSION in release (#33).
+
+## 1.2.0 (2020-07-30)
+
 * Update dependencies
 * Update providers list
 * Update docs
