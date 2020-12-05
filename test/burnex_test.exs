@@ -66,11 +66,11 @@ defmodule BurnexTest do
 
   describe "mx record validation" do
     test "correctly resolves domains with bad MX records" do
-      assert Burnex.is_burner_mx_record?("jetable.org") == {true, "Forbidden MX server(s): mx.jetable.org"}
+      assert Burnex.check_domain_mx_record("jetable.org") == {:error, "Forbidden MX server(s): mx.jetable.org"}
     end
 
     test "correctly resolves domains missing MX records" do
-      assert Burnex.is_burner_mx_record?("somenonesensedomain.blahblahblah") == {true, "Cannot find MX record"}
+      assert Burnex.check_domain_mx_record("somenonesensedomain.blahblahblah") == {:error, "Cannot find MX record"}
     end
 
     test "correctly resolves domains with 'good' MX records" do
@@ -79,7 +79,7 @@ defmodule BurnexTest do
         "hotmail.com"
       ]
       |> Enum.each(fn good_domain ->
-        refute Burnex.is_burner_mx_record?(good_domain), "#{good_domain} should have a good mailserver with valid MX record"
+        assert Burnex.check_domain_mx_record(good_domain) == :ok, "#{good_domain} should have a good mailserver with valid MX record"
       end)
     end
   end
