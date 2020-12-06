@@ -78,7 +78,7 @@ defp validate_email(changeset), do: changeset
 ### MX record DNS resolution
 
 As an extra precaution against newly-created burner domains,
-you can user Burnex to do MX record DNS resolution.
+you can use Burnex to do MX record DNS resolution.
 This is done like this:
 
 ```
