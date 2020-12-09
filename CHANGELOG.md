@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.0.0
+* Separate MX Record check from core functionality #52 - @peaceful-james
+* Misc doc changes (#47) - @kianmeng
+* Fixed doctests
+
 ## 2.2.0
 
 * Add option to resolve MX records (#50) - thanks @peaceful-james
