@@ -27,15 +27,13 @@ defmodule Burnex do
       true
       iex> Burnex.is_burner? "invalid.format.yopmail.fr"
       false
-      iex> Burnex.is_burner?("my-email@gmail.fr", true)
-      {true, "Cannot find MX record"}
 
   """
-  @spec is_burner?(binary(), boolean()) :: boolean()
-  def is_burner?(email, resolve_mx_record \\ false) do
+  @spec is_burner?(binary()) :: boolean()
+  def is_burner?(email) do
     case Regex.run(~r/@([^@]+)$/, String.downcase(email)) do
       [_ | [domain]] ->
-        is_burner_domain?(domain) or (resolve_mx_record and is_burner_mx_record?(domain))
+        is_burner_domain?(domain)
 
       _ ->
         # Bad email format
@@ -97,17 +95,17 @@ defmodule Burnex do
     end)
   end
 
-  @spec is_burner_mx_record?(binary()) :: boolean() | {boolean(), binary()}
-  def is_burner_mx_record?(domain) do
+  @spec check_domain_mx_record(binary()) :: :ok | {:error, binary()}
+  def check_domain_mx_record(domain) do
     with {:dns_resolve, {:ok, mx_resolution}} <- {:dns_resolve, DNS.resolve(domain, :mx)},
          {:bad_server_domains, []} <- {:bad_server_domains, bad_mx_server_domains(mx_resolution)} do
-      false
+      :ok
     else
       {:dns_resolve, _} ->
-        {true, "Cannot find MX record"}
+        {:error, "Cannot find MX record"}
 
       {:bad_server_domains, bad_server_domains} ->
-        {true,
+        {:error,
          "Forbidden MX server(s): " <>
            Enum.join(
              Enum.map(bad_server_domains, fn {_port, server} -> server end),
@@ -115,6 +113,6 @@ defmodule Burnex do
            )}
     end
   rescue
-    Socket.Error -> {true, "MX record search timed out"}
+    Socket.Error -> {:error, "MX record search timed out"}
   end
 end
