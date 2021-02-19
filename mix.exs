@@ -33,7 +33,7 @@ defmodule Burnex.Mixfile do
 
       # Dev
       {:credo, "~> 1.5.0", only: [:dev, :test], runtime: false},
-      {:dialyxir, "~> 1.0.0-rc.3", only: :dev, runtime: false},
+      {:dialyxir, "~> 1.1.0", only: :dev, runtime: false},
       {:ex_doc, "~> 0.22", only: :dev, runtime: false},
       {:eliver, "~> 2.0.0", only: :dev},
 
