@@ -15,7 +15,15 @@ defmodule Burnex.Mixfile do
       deps: deps(),
       docs: docs(),
       test_coverage: [tool: ExCoveralls],
-      preferred_cli_env: [coveralls: :test],
+      preferred_cli_env: [
+        credo: :test,
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.github": :test,
+        "coveralls.post": :test,
+        "coveralls.html": :test,
+        dialyzer: :test
+      ],
       dialyzer: [
         remove_defaults: [:unknown],
         plt_file: {:no_warn, "priv/plts/dialyzer.plt"}
@@ -33,12 +41,12 @@ defmodule Burnex.Mixfile do
 
       # Dev
       {:credo, "~> 1.5.0", only: [:dev, :test], runtime: false},
-      {:dialyxir, "~> 1.0.0-rc.3", only: :dev, runtime: false},
+      {:dialyxir, "~> 1.0", only: [:dev, :test], runtime: false},
       {:ex_doc, "~> 0.22", only: :dev, runtime: false},
       {:eliver, "~> 2.0.0", only: :dev},
 
       # Testing
-      {:excoveralls, "~> 0.10", only: :test},
+      {:excoveralls, "~> 0.10", only: :test, runtime: false},
       {:stream_data, "~> 0.1", only: :test}
     ]
   end

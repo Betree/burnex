@@ -58,11 +58,11 @@ defmodule Burnex do
   def is_burner_domain?(domain) do
     case MapSet.member?(@providers, domain) do
       false ->
-        case Regex.run(~r/^[^.]+[.](.*)$/, domain) do
+        case Regex.run(~r/^[^.]+[.](.+)$/, domain) do
           [_ | [higher_domain]] ->
             is_burner_domain?(higher_domain)
 
-          nil ->
+          _ ->
             false
         end
 
@@ -85,10 +85,16 @@ defmodule Burnex do
   end
 
   defp bad_mx_server_domains(mx_resolution) do
-    Enum.filter(mx_resolution, fn {_port, server_domain} ->
-      server_domain
-      |> to_string()
-      |> is_burner_domain?()
+    Enum.filter(mx_resolution, fn item ->
+      case item do
+        {_port, server_domain} ->
+          server_domain
+          |> to_string()
+          |> is_burner_domain?()
+
+        _ ->
+          true
+      end
     end)
   end
 

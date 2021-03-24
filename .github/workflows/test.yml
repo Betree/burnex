@@ -1,61 +1,157 @@
 name: Test
-on: push
+
+on:
+  push:
+  pull_request:
+    branches:
+      - master
 
 jobs:
+  check_duplicate_runs:
+    name: Check for duplicate runs
+    continue-on-error: true
+    runs-on: ubuntu-latest
+    outputs:
+      should_skip: ${{ steps.skip_check.outputs.should_skip }}
+    steps:
+      - id: skip_check
+        uses: fkirc/skip-duplicate-actions@master
+        with:
+          concurrent_skipping: always
+          cancel_others: true
+          skip_after_successful_duplicate: true
+          paths_ignore: '["**/README.md", "**/CHANGELOG.md", "**/LICENSE"]'
+          do_not_skip: '["pull_request"]'
+
   unit-test:
+    name: Run tests
     runs-on: ubuntu-latest
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      MIX_ENV: test
+
+    needs: check_duplicate_runs
+    if: ${{ needs.check_duplicate_runs.outputs.should_skip != 'true' }}
+
     steps:
-      - uses: actions/checkout@v2
-      - name: Cache deps
-        id: cache-deps
-        uses: actions/cache@v2
-        with:
-          path: deps
-          key: ${{ runner.os }}-deps
-      - uses: actions/setup-elixir@v1
-        with:
-          otp-version: "22.2"
-          elixir-version: "1.9.4"
-      - run: mix deps.get
-      - run: mix coveralls.github
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Set up Elixir
+      uses: erlef/setup-elixir@v1
+      with:
+        otp-version: "22.2"
+        elixir-version: "1.9.4"
+
+    - name: Cache deps
+      id: cache-deps
+      uses: actions/cache@v2
+      with:
+        path: |
+          deps
+          _build
+        key: deps-${{ runner.os }}-${{ hashFiles('**/mix.lock') }}-git-${{ github.sha }}
+        restore-keys: |
+          deps-${{ runner.os }}-${{ hashFiles('**/mix.lock') }}
+          deps-${{ runner.os }}-$
+
+    - name: Install package dependencies
+      run: mix deps.get
+
+    - name: Check code format
+      run: mix format --check-formatted
+
+    - name: Compile dependencies
+      run: mix compile
+      env:
+        MIX_ENV: test
+
+    - name: Run unit tests
+      run: mix coveralls.github
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   credo:
+    name: Run credo
+    needs: unit-test
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
-      - name: Cache deps
-        id: cache-deps
-        uses: actions/cache@v2
-        with:
-          path: deps
-          key: ${{ runner.os }}-deps
-      - uses: actions/setup-elixir@v1
-        with:
-          otp-version: "22.2"
-          elixir-version: "1.9.4"
-      - run: mix deps.get
-      - run: mix credo
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Set up Elixir
+      uses: erlef/setup-elixir@v1
+      with:
+        otp-version: "22.2"
+        elixir-version: "1.9.4"
+
+    - name: Cache deps
+      id: cache-deps
+      uses: actions/cache@v2
+      with:
+        path: |
+          deps
+          _build
+        key: deps-${{ runner.os }}-${{ hashFiles('**/mix.lock') }}-git-${{ github.sha }}
+        restore-keys: |
+          deps-${{ runner.os }}-${{ hashFiles('**/mix.lock') }}
+          deps-${{ runner.os }}-$
+
+    - name: Install package dependencies
+      run: mix deps.get
+
+    - name: Compile dependencies
+      run: mix compile
+      env:
+        MIX_ENV: test
+
+    - name: Run credo
+      run: mix credo
+
   dialyzer:
+    name: Run dialyzer
+    needs: unit-test
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
-      - name: Cache deps
-        id: cache-deps
-        uses: actions/cache@v2
-        with:
-          path: deps
-          key: ${{ runner.os }}-deps
-      - name: Cache PLT
-        id: cache-plt
-        uses: actions/cache@v2
-        with:
-          path: priv/plts
-          key: ${{ runner.os }}-plts
-      - uses: actions/setup-elixir@v1
-        with:
-          otp-version: "22.2"
-          elixir-version: "1.9.4"
-      - run: mix deps.get
-      - run: mix dialyzer
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Set up Elixir
+      uses: erlef/setup-elixir@v1
+      with:
+        otp-version: "22.2"
+        elixir-version: "1.9.4"
+
+    - name: Cache deps
+      id: cache-deps
+      uses: actions/cache@v2
+      with:
+        path: |
+          deps
+          _build
+        key: dialyzer-${{ runner.os }}-${{ hashFiles('**/mix.lock') }}-git-${{ github.sha }}
+        restore-keys: |
+          dialyzer-${{ runner.os }}-${{ hashFiles('**/mix.lock') }}
+          dialyzer-${{ runner.os }}-$
+
+    - name: Create dializer plts path
+      run: mkdir -p priv/plts
+
+    - name: Restore plts cache
+      uses: actions/cache@v2
+      with:
+        path: priv/plts
+        key: plts-${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-${{ hashFiles('**/mix.lock') }}-${{ github.sha }}
+        restore-keys: |
+          plts-${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-${{ hashFiles('**/mix.lock') }}
+          plts-${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}
+
+    - name: Install package dependencies
+      run: mix deps.get
+
+    - name: Compile dependencies
+      run: mix compile
+      env:
+        MIX_ENV: test
+
+    - name: Run dialyzer
+      run: mix dialyzer
