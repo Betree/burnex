@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.1.0
+* Update dependencies (thanks @dolfinus)
+* Fix CI (thanks @dolfinus)
+* Update providers (thanks @robsonpeixoto)
+
 ## 3.0.0
 * Separate MX Record check from core functionality #52 - @peaceful-james
 * Misc doc changes (#47) - @kianmeng
