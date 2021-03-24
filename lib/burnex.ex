@@ -72,12 +72,12 @@ defmodule Burnex do
   end
 
   @doc """
-  Returns the list of all blocked domains providers.
+  Returns a MapSet with all blocked domains providers.
 
   ## Examples
 
       iex> Burnex.providers()
-      #MapSet<["mysunrise.tech", "gmailom.co", "renwoying.org", "xn--c3cralk2a3ak7a5gghbv.com", "ghork.live", "wellnessmarketing.solutions", "zerograv.top", "votenoonnov6.com", "b45win.org", "muslimahcollection.online", "barcntenef.ml", "lpi1iyi7m3zfb0i.gq", "ceco3kvloj5s3.tk", "outlettomsshoesstore.com", "kebabishcosladacoslada.com", "utoo.email", "pedia-egypt.org", "bestmemory.net", "8263813.com", "hz6m.com", "anocor.gq", "qvady.network", "2v3vjqapd6itot8g4z.gq", "yliora.site", "ectseep.site", "2m46.space", "godrejpropertiesforestgrove.com", "smart-thailand.com", "takebacktheregent.com", "dozarb.online", "mail22.space", "ttsbcq.us", "clubhowse.com", "gayflorida.net", "specialsshorts.info", "dubainaturalsoap.com", "carolynlove.website", "jlqiqd.tokyo", "kulitlumpia8.cf", "adastralflying.com", "superstachel.de", "diyarbakirengelliler.xyz", "notatempmail.info", "directproductinvesting.com", "francisxkelly.com", "saclouisvuittonboutiquefrance.com", "mainpokemon.com", "16up.ru", "upelmail.com", "374kj.com", ...]>
+      #MapSet<["mysunrise.tech", "gmailom.co", "renwoying.org", "xn--c3cralk2a3ak7a5gghbv.com", "vevevevevery.ru", "ghork.live", "totobaksa.website", "wellnessmarketing.solutions", "zerograv.top", "votenoonnov6.com", "b45win.org", "dataleak01.site", "muslimahcollection.online", "barcntenef.ml", "lpi1iyi7m3zfb0i.gq", "ceco3kvloj5s3.tk", "outlettomsshoesstore.com", "kebabishcosladacoslada.com", "utoo.email", "pedia-egypt.org", "bestmemory.net", "8263813.com", "hz6m.com", "anocor.gq", "charltons.biz", "qvady.network", "2v3vjqapd6itot8g4z.gq", "yliora.site", "ectseep.site", "2m46.space", "godrejpropertiesforestgrove.com", "smart-thailand.com", "takebacktheregent.com", "dozarb.online", "mail22.space", "ttsbcq.us", "clubhowse.com", "gayflorida.net", "specialsshorts.info", "dubainaturalsoap.com", "carolynlove.website", "jlqiqd.tokyo", "kulitlumpia8.cf", "adastralflying.com", "superstachel.de", "diyarbakirengelliler.xyz", "notatempmail.info", "directproductinvesting.com", "francisxkelly.com", "saclouisvuittonboutiquefrance.com", ...]>
 
   """
   def providers do
