@@ -21,7 +21,7 @@ Add `:burnex` to your list of dependencies in `mix.exs`.
 ```elixir
 def deps do
   [
-    {:burnex, "~> 1.0"}
+    {:burnex, "~> 3.1.0"}
   ]
 end
 ```
