@@ -28,6 +28,7 @@ jobs:
       - name: Wait for tests
         uses: fountainhead/action-wait-for-check@v1.0.0
         id: wait-for-tests
+        continue-on-error: true
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           checkName: Run dialyzer
