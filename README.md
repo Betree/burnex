@@ -118,14 +118,11 @@ Here is an example function to check if an email is valid:
   @spec is_valid?(String.t()) :: true | {false, String.t()}
   def is_valid?(email) do
     case email_domain(email) do
-      [_ | [domain]] ->
-        case domain in @good_email_domains do
-          true ->
-            true
+      [_ | [domain]] when domain in @good_email_domains ->
+        true
 
-          false ->
-            is_not_burner?(email, domain)
-        end
+      [_ | [domain]] ->
+        is_not_burner?(email, domain)
 
       _ ->
         {false, "Email in bad format"}
