@@ -85,6 +85,52 @@ iex> Burnex.check_domain_mx_record("gmail.fr")
 {:error, "Cannot find MX record"}
 ```
 
+Here is an example function to check if an email is valid:
+
+```elixir
+  # Use a regex capture to get the "domain" part of an email
+  @email_regex ~r/^\S+@(\S+\.\S+)$/
+
+  # hard-code some trusted domains to avoid checking their MX record every time
+  @good_email_domains [
+    "gmail.com",
+    "fastmail.com"
+  ]
+
+  defp email_domain(email), do: Regex.run(@email_regex, String.downcase(email))
+
+  defp is_not_burner?(email, domain) do
+    with {:is_burner, false} <- {:is_burner, Burnex.is_burner?(email)},
+         {:check_mx_record, :ok} <- {:check_mx_record, Burnex.check_domain_mx_record(domain)} do
+      true
+    else
+      {:is_burner, true} ->
+        {false, "forbidden email"}
+
+      {:check_mx_record, {:error, error_message}} when is_binary(error_message) ->
+        {false, error_message}
+
+      {:check_mx_record, :error} ->
+        {false, "forbidden provider"}
+    end
+  end
+
+  @spec is_valid?(String.t()) :: true | {false, String.t()}
+  def is_valid?(email) do
+    case email_domain(email) do
+      [_ | [domain]] when domain in @good_email_domains ->
+        true
+
+      [_ | [domain]] ->
+        is_not_burner?(email, domain)
+
+      _ ->
+        {false, "Email in bad format"}
+    end
+  end
+```
+
+
 ## License
 
 This software is licensed under MIT license. Copyright (c) 2018- Benjamin Piouffle.
