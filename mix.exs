@@ -37,7 +37,7 @@ defmodule Burnex.Mixfile do
 
   defp deps do
     [
-      {:dns, "~> 2.2.0"},
+      {:dns, "~> 2.3.0"},
 
       # Dev
       {:credo, "~> 1.5.0", only: [:dev, :test], runtime: false},
