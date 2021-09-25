@@ -39,6 +39,13 @@ defmodule BurnexTest do
     refute Enum.any?(Burnex.providers(), &(String.downcase(&1) != &1))
   end
 
+  test "should respect passed providers" do
+    good_provider = Burnex.providers() |> Enum.random()
+    providers = Burnex.providers() |> MapSet.delete(good_provider)
+
+    refute Burnex.is_burner?("test@" <> good_provider, providers: providers)
+  end
+
   property "doesn't explode if email has bad format" do
     check all(email <- StreamData.string(:alphanumeric)) do
       refute Burnex.is_burner?(email)

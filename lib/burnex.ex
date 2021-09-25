@@ -14,10 +14,18 @@ defmodule Burnex do
 
   @dialyzer {:nowarn_function, is_burner_domain?: 1}
 
+  @typep option :: {:providers, MapSet.t()}
+
   @doc """
   Check if email is a temporary / burner address.
 
   Optionally resolve the MX record
+
+  ## Options
+
+   * providers - (set of domains) this option specifies
+   burner email domains to match against. Defaults to:
+   [list of domains](https://github.com/Betree/burnex/blob/master/priv/burner-email-providers/emails.txt)
 
   ## Examples
 
@@ -29,11 +37,13 @@ defmodule Burnex do
       false
 
   """
-  @spec is_burner?(binary()) :: boolean()
-  def is_burner?(email) do
+  @spec is_burner?(binary(), list(option)) :: boolean()
+  def is_burner?(email, opts \\ []) when is_list(opts) do
+    providers = Keyword.get(opts, :providers, @providers)
+
     case Regex.run(~r/@([^@]+)$/, String.downcase(email)) do
       [_ | [domain]] ->
-        is_burner_domain?(domain)
+        is_burner_domain?(domain, providers: providers)
 
       _ ->
         # Bad email format
@@ -43,6 +53,12 @@ defmodule Burnex do
 
   @doc """
   Check a domain is a burner domain.
+
+  ## Options
+
+   * providers - (set of domains) this option specifies
+   burner email domains to match against. Defaults to:
+   [list of domains](https://github.com/Betree/burnex/blob/master/priv/burner-email-providers/emails.txt)
 
   ## Examples
 
@@ -54,13 +70,15 @@ defmodule Burnex do
       false
 
   """
-  @spec is_burner_domain?(binary()) :: boolean()
-  def is_burner_domain?(domain) do
-    case MapSet.member?(@providers, domain) do
+  @spec is_burner_domain?(binary(), list(option)) :: boolean()
+  def is_burner_domain?(domain, opts \\ []) when is_list(opts) do
+    providers = Keyword.get(opts, :providers, @providers)
+
+    case MapSet.member?(providers, domain) do
       false ->
         case Regex.run(~r/^[^.]+[.](.+)$/, domain) do
           [_ | [higher_domain]] ->
-            is_burner_domain?(higher_domain)
+            is_burner_domain?(higher_domain, providers: providers)
 
           _ ->
             false
@@ -84,13 +102,15 @@ defmodule Burnex do
     @providers
   end
 
-  defp bad_mx_server_domains(mx_resolution) do
+  defp bad_mx_server_domains(mx_resolution, opts) do
+    providers = Keyword.get(opts, :providers, @providers)
+
     Enum.filter(mx_resolution, fn item ->
       case item do
         {_port, server_domain} ->
           server_domain
           |> to_string()
-          |> is_burner_domain?()
+          |> is_burner_domain?(providers: providers)
 
         _ ->
           true
@@ -98,10 +118,13 @@ defmodule Burnex do
     end)
   end
 
-  @spec check_domain_mx_record(binary()) :: :ok | {:error, binary()}
-  def check_domain_mx_record(domain) do
+  @spec check_domain_mx_record(binary(), list(option)) :: :ok | {:error, binary()}
+  def check_domain_mx_record(domain, opts \\ []) when is_list(opts) do
+    providers = Keyword.get(opts, :providers, @providers)
+
     with {:dns_resolve, {:ok, mx_resolution}} <- {:dns_resolve, DNS.resolve(domain, :mx)},
-         {:bad_server_domains, []} <- {:bad_server_domains, bad_mx_server_domains(mx_resolution)} do
+         {:bad_server_domains, []} <-
+           {:bad_server_domains, bad_mx_server_domains(mx_resolution, providers: providers)} do
       :ok
     else
       {:dns_resolve, _} ->
