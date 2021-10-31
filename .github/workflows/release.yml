@@ -1,10 +1,9 @@
 name: Releases
 
 on:
-  workflow_dispatch:
-  #push:
-  #  tags:
-  #    - .*
+  push:
+    tags:
+      - .*
 
 jobs:
   release:
@@ -17,7 +16,7 @@ jobs:
         id: wait-for-tests
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          checkName: Run dialyzer
+          checkName: All done
           ref: ${{ github.ref }}
           timeoutSeconds: 3600
 
@@ -47,12 +46,9 @@ jobs:
 
       - name: Create release
         id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          token: ${{ secrets.PERSONAL_TOKEN }}
           draft: false
           prerelease: false
 
