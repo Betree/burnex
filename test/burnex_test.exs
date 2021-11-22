@@ -72,7 +72,7 @@ defmodule BurnexTest do
 
     test "correctly resolves domains missing MX records" do
       assert Burnex.check_domain_mx_record("somenonesensedomain.blahblahblah") ==
-               {:error, "Cannot find MX record"}
+               {:error, "Cannot find MX records"}
     end
 
     test "correctly resolves domains with 'good' MX records" do

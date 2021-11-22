@@ -82,7 +82,7 @@ This is done like this:
 iex> Burnex.check_domain_mx_record("gmail.com")
 :ok
 iex> Burnex.check_domain_mx_record("gmail.fr")
-{:error, "Cannot find MX record"}
+{:error, "Cannot find MX records"}
 ```
 
 Here is an example function to check if an email is valid:
