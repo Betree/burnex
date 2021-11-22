@@ -84,38 +84,23 @@ defmodule Burnex do
     @providers
   end
 
-  defp bad_mx_server_domains(mx_resolution) do
-    Enum.filter(mx_resolution, fn item ->
-      case item do
-        {_port, server_domain} ->
-          server_domain
-          |> to_string()
-          |> is_burner_domain?()
-
-        _ ->
-          true
-      end
-    end)
-  end
-
   @spec check_domain_mx_record(binary()) :: :ok | {:error, binary()}
   def check_domain_mx_record(domain) do
-    with {:dns_resolve, {:ok, mx_resolution}} <- {:dns_resolve, DNS.resolve(domain, :mx)},
-         {:bad_server_domains, []} <- {:bad_server_domains, bad_mx_server_domains(mx_resolution)} do
-      :ok
-    else
-      {:dns_resolve, _} ->
-        {:error, "Cannot find MX record"}
-
-      {:bad_server_domains, bad_server_domains} ->
-        {:error,
-         "Forbidden MX server(s): " <>
-           Enum.join(
-             Enum.map(bad_server_domains, fn {_port, server} -> server end),
-             ", "
-           )}
+    case :inet_res.lookup(to_charlist(domain), :any, :mx) do 
+      [] -> {:error, "Cannot find MX records"}
+      mx_records -> check_bad_mx_server_domains(mx_records)
     end
-  rescue
-    Socket.Error -> {:error, "MX record search timed out"}
+  end
+
+  defp check_bad_mx_server_domains(mx_records) do
+    mx_records
+    |> Enum.map(fn {_port, domain} -> to_string(domain) end)
+    |> Enum.filter(fn domain -> is_burner_domain?(domain) end)
+    |> mx_server_check_response()
+  end
+
+  defp mx_server_check_response([]), do: :ok
+  defp mx_server_check_response(domains) do
+    {:error, "Forbidden MX server(s): " <> Enum.join(domains, ", ")}
   end
 end
