@@ -86,7 +86,7 @@ defmodule Burnex do
 
   @spec check_domain_mx_record(binary()) :: :ok | {:error, binary()}
   def check_domain_mx_record(domain) do
-    case :inet_res.lookup(to_charlist(domain), :any, :mx) do 
+    case :inet_res.lookup(to_charlist(domain), :any, :mx) do
       [] -> {:error, "Cannot find MX records"}
       mx_records -> check_bad_mx_server_domains(mx_records)
     end
@@ -100,6 +100,7 @@ defmodule Burnex do
   end
 
   defp mx_server_check_response([]), do: :ok
+
   defp mx_server_check_response(domains) do
     {:error, "Forbidden MX server(s): " <> Enum.join(domains, ", ")}
   end
