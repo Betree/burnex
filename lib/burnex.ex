@@ -101,7 +101,7 @@ defmodule Burnex do
 
   @spec check_domain_mx_record(binary()) :: :ok | {:error, binary()}
   def check_domain_mx_record(domain) do
-    case :inet_res.lookup(to_charlist(domain), :any, :mx, @inet_res_opts, 5_000) do
+    case :inet_res.lookup(to_charlist(domain), :in, :mx, @inet_res_opts, 5_000) do
       [] -> {:error, "Cannot find MX records"}
       mx_records -> check_bad_mx_server_domains(mx_records)
     end
