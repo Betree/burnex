@@ -14,6 +14,15 @@ defmodule Burnex do
 
   @dialyzer {:nowarn_function, is_burner_domain?: 1}
 
+  @inet_res_opts [
+    {:alt_nameservers, [
+      {{1,1,1,1}, 53}, # Cloudflare primary
+      {{8,8,8,8}, 53}, # Google primary
+      {{1,0,0,1}, 53}, # Cloudflare secondary
+      {{8,8,4,4}, 53}  # Google secondary
+    ]}
+  ]
+
   @doc """
   Check if email is a temporary / burner address.
 
@@ -87,7 +96,7 @@ defmodule Burnex do
 
   @spec check_domain_mx_record(binary()) :: :ok | {:error, binary()}
   def check_domain_mx_record(domain) do
-    case :inet_res.lookup(to_charlist(domain), :any, :mx) do
+    case :inet_res.lookup(to_charlist(domain), :any, :mx, @inet_res_opts, 5_000) do
       [] -> {:error, "Cannot find MX records"}
       mx_records -> check_bad_mx_server_domains(mx_records)
     end
