@@ -67,7 +67,7 @@ defmodule BurnexTest do
   describe "mx record validation" do
     test "correctly resolves domains with bad MX records" do
       assert Burnex.check_domain_mx_record("jetable.org") ==
-               {:error, "Forbidden MX server(s): mx.jetable.org"}
+               {:error, "Forbidden MX server(s): smtp.yopmail.com"}
     end
 
     test "correctly resolves domains missing MX records" do
