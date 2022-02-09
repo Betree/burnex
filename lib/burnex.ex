@@ -69,7 +69,7 @@ defmodule Burnex do
 
   """
   @spec is_burner_domain?(binary()) :: boolean()
-  def is_burner_domain?(domain) do
+  def is_burner_domain?(domain) when is_binary(domain) do
     case MapSet.member?(@providers, domain) do
       false ->
         case Regex.run(~r/^[^.]+[.](.+)$/, domain) do
@@ -84,6 +84,8 @@ defmodule Burnex do
         true
     end
   end
+
+  def is_burner_domain?(_), do: true
 
   @doc """
   Returns a MapSet with all blocked domains providers.
