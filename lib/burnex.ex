@@ -15,12 +15,17 @@ defmodule Burnex do
   @dialyzer {:nowarn_function, is_burner_domain?: 1}
 
   @inet_res_opts [
-    {:alt_nameservers, [
-      {{1,1,1,1}, 53}, # Cloudflare primary
-      {{8,8,8,8}, 53}, # Google primary
-      {{1,0,0,1}, 53}, # Cloudflare secondary
-      {{8,8,4,4}, 53}  # Google secondary
-    ]}
+    {:alt_nameservers,
+     [
+       # Cloudflare primary
+       {{1, 1, 1, 1}, 53},
+       # Google primary
+       {{8, 8, 8, 8}, 53},
+       # Cloudflare secondary
+       {{1, 0, 0, 1}, 53},
+       # Google secondary
+       {{8, 8, 4, 4}, 53}
+     ]}
   ]
 
   @doc """
