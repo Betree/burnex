@@ -39,6 +39,14 @@ defmodule BurnexTest do
     refute Enum.any?(Burnex.providers(), &(String.downcase(&1) != &1))
   end
 
+  describe "is_burner_domain" do
+    test "with invalid input" do
+      assert Burnex.is_burner_domain?(nil)
+      assert Burnex.is_burner_domain?(42)
+      assert Burnex.is_burner_domain?(%{})
+    end
+  end
+
   property "doesn't explode if email has bad format" do
     check all(email <- StreamData.string(:alphanumeric)) do
       refute Burnex.is_burner?(email)
