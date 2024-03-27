@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.2.0
+* Remove dns dependency in favor of erlang's :inet_res module #80
+* feature: customize providers #78
+* update emails list
+* update dependencies
+
 ## 3.1.0
 * Update dependencies (thanks @dolfinus)
 * Fix CI (thanks @dolfinus)
