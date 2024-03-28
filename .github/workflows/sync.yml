@@ -1,0 +1,58 @@
+name: Daily list sync
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "30 15 * * *"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Wait for tests
+        uses: fountainhead/action-wait-for-check@v1.0.0
+        id: wait-for-tests
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          checkName: All done
+          ref: ${{ github.ref }}
+          timeoutSeconds: 3600
+
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.PERSONAL_TOKEN }}
+
+      - name: Download new list
+        run: ./update_providers.sh
+
+      - name: Check for list changes
+        continue-on-error: true
+        id: changes
+        run: git update-index --refresh && git diff-index HEAD
+
+      - name: Commit changes
+        if: steps.changes.outcome != 'success'
+        run: |
+          git checkout master --
+          git config user.email "benjamin@opencollective.com"
+          git config user.name "Burnex Bot"
+          git add priv/burner-email-providers/emails.txt
+
+      - name: Bump version
+        if: steps.changes.outcome != 'success'
+        run: |
+          CURRENT_VERSION=`cat VERSION`
+          NEW_PATCH=`echo $CURRENT_VERSION | sed -E 's/v?[0-9]+\.[0-9]+\.([0-9]+)/\1+1/' | bc`
+          NEW_VERSION=`echo $CURRENT_VERSION | sed -E "s/(v?[0-9]+\.[0-9]+\.)[0-9]+/\1$NEW_PATCH/"`
+          echo $NEW_VERSION > VERSION
+          git add VERSION
+          git commit -m "chore: updated domain list"
+          git tag -a $NEW_VERSION -m $NEW_VERSION
+
+      - name: Push changes
+        if: steps.changes.outcome != 'success'
+        run: |
+          git push
+          git push --tags
