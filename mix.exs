@@ -45,7 +45,7 @@ defmodule Burnex.Mixfile do
 
       # Testing
       {:excoveralls, "~> 0.10", only: :test, runtime: false},
-      {:stream_data, "~> 0.1", only: :test}
+      {:stream_data, "~> 1.1", only: :test}
     ]
   end
 
