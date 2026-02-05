@@ -1,5 +1,18 @@
 # Burnex
 
+⚠️ 2026-02-05: Burnex is no longer actively maintained. There are two main reasons for this decision:
+- The email ecosystem has changed: there are now many legitimate privacy ‑and security‑ focused uses of burner and alias email addresses. Blanket‑blocking them is often not what you want for your users.
+- My current schedule does not allow me to provide the maintenance and update cadence that this project deserves.
+
+If you still need this functionality, please consider the following alternatives:
+- Fork it.
+- Use the upstream community‑maintained list of burner email providers directly: https://github.com/wesbos/burner-email-providers. Burnex is essentially an Elixir wrapper around this list.
+- https://github.com/remoteoss/email_guard also seems popular enough (this project has no affiliation with them)
+
+Existing versions will remain available on Hex.pm, but no further features or updates are planned.
+
+---
+
 <!--MDOC !-->
 
 [![Build Status](https://github.com/Betree/burnex/workflows/Test/badge.svg)](https://github.com/Betree/burnex/actions)
@@ -10,7 +23,7 @@
 [![License](https://img.shields.io/hexpm/l/burnex.svg)](https://hex.pm/packages/burnex)
 [![Last Updated](https://img.shields.io/github/last-commit/Betree/burnex.svg)](https://github.com/Betree/burnex/commits/master)
 
-Compare an email address against 3900+ burner email domains (temporary email
+Compare an email address against 22735+ burner email domains (temporary email
 providers) based on this list from
 [https://github.com/wesbos/burner-email-providers](https://github.com/wesbos/burner-email-providers).
 
