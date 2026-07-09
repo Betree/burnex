@@ -1,15 +1,6 @@
 # Burnex
 
-⚠️ 2026-02-05: Burnex is no longer actively maintained. There are two main reasons for this decision:
-- The email ecosystem has changed: there are now many legitimate privacy ‑and security‑ focused uses of burner and alias email addresses. Blanket‑blocking them is often not what you want for your users.
-- My current schedule does not allow me to provide the maintenance and update cadence that this project deserves.
-
-If you still need this functionality, please consider the following alternatives:
-- Fork it.
-- Use the upstream community‑maintained list of burner email providers directly: https://github.com/wesbos/burner-email-providers. Burnex is essentially an Elixir wrapper around this list.
-- https://github.com/remoteoss/email_guard also seems popular enough (this project has no affiliation with them)
-
-Existing versions will remain available on Hex.pm, but no further features or updates are planned.
+⚠️ 2026-07-09: I ([@Betree](https://github.com/betree)) am transferring the ownership of this project to [@achedeuzot](https://github.com/achedeuzot), who will continue the maintainance of this repo and the hex.pm package.
 
 ---
 
